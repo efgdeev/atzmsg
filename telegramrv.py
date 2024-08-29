@@ -92,7 +92,7 @@ cada dia de espera é um dia a menos de ganhos potenciais. **Inscreva-se já e d
 
     # Verifica se o caminho da imagem é válido
     if not os.path.exists(image_path):
-        print(f"Erro: A imagem '{imagem_caminho}' não foi encontrada.")
+        print(f"Erro: A imagem '{image_path}' não foi encontrada.")
         return
 
     # Defina os horários específicos
@@ -102,7 +102,7 @@ cada dia de espera é um dia a menos de ganhos potenciais. **Inscreva-se já e d
         agora = datetime.now().time()
         for horario in horarios_especificos:
             if agora.hour == horario.hour and agora.minute == horario.minute:
-                await client.send_file(destino, imagem_caminho, caption=texto)
+                await client.send_file(destino, image_path, caption=texto)
                 print(f"Imagem enviada às {horario}")
                 await asyncio.sleep(60)  # Aguarda 60 segundos para evitar reenvio dentro do mesmo minuto
 
