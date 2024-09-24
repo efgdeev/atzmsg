@@ -74,7 +74,7 @@ async def processar_mensagem(event):
 # Função para enviar a imagem com texto nos horários específicos
 async def enviar_imagem_em_horarios_especificos(client):
     destino = -1002231747942
-    image_path = '/home/kaioluan2013_km/Curso_Feed.png'
+    image_path = 'Curso_Feed.png'
     texto = '''**EFG Market Mind:**
 **Você está pronto para transformar seu conhecimento e alcançar o próximo nível?**
 
@@ -84,7 +84,7 @@ Este é o momento de agir e conquistar a independência financeira que você sem
 - **estratégias poderosas de daytrade e swingtrade**,
 e terá **acesso exclusivo a indicadores** desenvolvidos para maximizar seus ganhos.
 
-💡 **Bônus Especial:** Receba todos os modelos matemáticos transformados em indicadores que serão o diferencial nas suas operações. E o melhor, você pode começar agora mesmo investindo apenas **12x de R$ 115,83**.
+💡 **Bônus Especial:** Receba todos os modelos matemáticos transformados em indicadores que serão o diferencial nas suas operações. E o melhor, você pode começar agora mesmo investindo apenas **12x de R$ 138,75**.
 
 💰 **Não deixe passar essa oportunidade**
 
@@ -96,7 +96,7 @@ cada dia de espera é um dia a menos de ganhos potenciais. **Inscreva-se já e d
         return
 
     # Defina os horários específicos
-    horarios_especificos = [time(10, 0), time(13, 30), time(00, 18)]
+    horarios_especificos = [time(13, 0), time(18, 30), time(23, 30)]
 
     while True:
         agora = datetime.now().time()
@@ -112,13 +112,20 @@ def main():
     print('Monitoramento iniciado ...')
     client = TelegramClient(sessao, api_id, api_hash)
 
-    @client.on(events.NewMessage(chats=[-1001744113331, -1001257215455]))
+    @client.on(events.NewMessage(chats=[-1001744113331, -1001257215455, -1001683710666]))
     async def handle_new_message(event):
         agora = datetime.now().time()
+        dia_semana = datetime.now().weekday()
 
-        if event.chat_id == -1001257215455 and agora >= datetime.strptime("18:20", "%H:%M").time():
-            return  # Ignora a mensagem fora do horário permitido
-
+        if event.chat_id == -1001257215455 and dia_semana == 6:
+            print("Mensagens ignoradas no sábado para o canal")
+            return #Verifica o dia da semana
+        if event.chat_id  == -1001257215455 and dia_semana == 6 and agora < time(22, 0):
+            print("Mensagens ignoradas domingo antes das 19H")
+            return #Verifica se não passou das 19h para permitr envio de mensagem
+        if event.chat_id == -1001257215455 and agora >= datetime.strptime("21:35, "%H:%M").time():
+            return #ignora a mensagem fora de orario permitido
+        
         if event.chat_id == -1001744113331:
             try:
                 await client.get_entity(event.chat_id)
